@@ -1,0 +1,384 @@
+@import "tailwindcss";
+
+/* ============================================================
+   RUGRUFF — "Loop & Pile" design system
+   A light, warm canvas that behaves like monk's cloth, with
+   yarn-coloured accents pulled straight from the real rugs and
+   a fluffy tufted outline as the signature frame.
+   ============================================================ */
+
+@theme {
+  /* Canvas — warm undyed cloth, never pure white */
+  --color-canvas: #faf6ef;
+  --color-canvas-2: #f2e9da;
+  --color-canvas-3: #e8dcc7;
+
+  /* Ink */
+  --color-ink: #14110d;
+  --color-ink-2: #5c5348;
+  --color-ink-3: #8b8074;
+
+  /* Yarn — sampled from the client's actual work */
+  --color-orange: #f5871f;
+  --color-marigold: #ffc300;
+  --color-grape: #8b63c4;
+  --color-bubble: #ff5fa2;
+
+  --font-display: var(--font-bricolage), ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+
+  --ease-tuft: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-tap-highlight-color: transparent;
+    /* Decorative blooms and tufted pile rings are deliberately drawn
+       outside their boxes. `clip` contains them without creating a
+       scroll container — so the sticky header still sticks. */
+    overflow-x: clip;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+
+  body {
+    background-color: var(--color-canvas);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    font-synthesis-weight: none;
+    text-rendering: optimizeLegibility;
+    overflow-x: clip;
+  }
+
+  ::selection {
+    background: var(--color-marigold);
+    color: var(--color-ink);
+  }
+
+  :focus-visible {
+    outline: 3px solid var(--color-grape);
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-display);
+    font-weight: 800;
+    letter-spacing: -0.035em;
+    line-height: 0.92;
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+}
+
+@layer components {
+  /* ---- Monk's cloth ------------------------------------------------
+     The woven base fabric a tufting gun punches through. Two crossed
+     gradient sets at low alpha read as a subtle warp/weft at any size. */
+  .cloth {
+    background-color: var(--color-canvas);
+    background-image:
+      repeating-linear-gradient(
+        90deg,
+        rgba(92, 83, 72, 0.055) 0 1px,
+        transparent 1px 9px
+      ),
+      repeating-linear-gradient(
+        0deg,
+        rgba(92, 83, 72, 0.055) 0 1px,
+        transparent 1px 9px
+      );
+  }
+
+  .cloth-warm {
+    background-color: var(--color-canvas-2);
+    background-image:
+      repeating-linear-gradient(
+        90deg,
+        rgba(92, 83, 72, 0.07) 0 1px,
+        transparent 1px 9px
+      ),
+      repeating-linear-gradient(
+        0deg,
+        rgba(92, 83, 72, 0.07) 0 1px,
+        transparent 1px 9px
+      );
+  }
+
+  /* ---- The tufted frame -------------------------------------------
+     Every rug RugRuff makes is finished with a thick white fluffy
+     outline. We rebuild that in the UI: a white blob sits behind the
+     image and gets pushed around by an SVG turbulence filter, so the
+     edge frays exactly like yarn pile. The image itself is never
+     filtered — only the ring — so photos stay crisp. */
+  .tufted {
+    position: relative;
+    isolation: isolate;
+  }
+
+  .tufted::before {
+    content: "";
+    position: absolute;
+    inset: calc(-1 * var(--pile, 16px));
+    z-index: -1;
+    background: #fff;
+    border-radius: inherit;
+    filter: url(#fluff);
+    transition: inset 0.5s var(--ease-tuft);
+  }
+
+  .tufted-b::before {
+    filter: url(#fluff-b);
+  }
+  .tufted-c::before {
+    filter: url(#fluff-c);
+  }
+
+  /* Accent pile — a second coloured ring peeking out behind the white,
+     the way a two-tone rug border does. */
+  .tufted-accent::after {
+    content: "";
+    position: absolute;
+    inset: calc(-1 * var(--pile, 16px) - 9px);
+    z-index: -2;
+    background: var(--pile-color, var(--color-marigold));
+    border-radius: inherit;
+    filter: url(#fluff-b);
+    transition: inset 0.5s var(--ease-tuft);
+  }
+
+  .tufted-hover:hover::before {
+    inset: calc(-1 * var(--pile, 16px) - 6px);
+  }
+  .tufted-hover:hover::after {
+    inset: calc(-1 * var(--pile, 16px) - 17px);
+  }
+
+  /* ---- Organic rug silhouettes -------------------------------------
+     Hand-tufted rugs are never rectangles. */
+  .blob-1 {
+    border-radius: 58% 42% 47% 53% / 44% 51% 49% 56%;
+  }
+  .blob-2 {
+    border-radius: 42% 58% 63% 37% / 55% 42% 58% 45%;
+  }
+  .blob-3 {
+    border-radius: 51% 49% 38% 62% / 62% 47% 53% 38%;
+  }
+  .blob-4 {
+    border-radius: 63% 37% 55% 45% / 38% 60% 40% 62%;
+  }
+
+  /* ---- Chunky pile buttons ----------------------------------------- */
+  .btn {
+    --shadow-color: var(--color-ink);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+    padding: 0.95rem 1.9rem;
+    border-radius: 999px;
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 1.0625rem;
+    letter-spacing: -0.02em;
+    line-height: 1;
+    border: 2.5px solid var(--color-ink);
+    background: var(--color-marigold);
+    color: var(--color-ink);
+    box-shadow: 0 5px 0 0 var(--shadow-color);
+    transform: translateY(0);
+    transition:
+      transform 0.14s var(--ease-tuft),
+      box-shadow 0.14s var(--ease-tuft),
+      background-color 0.2s ease;
+    text-decoration: none;
+    cursor: pointer;
+  }
+
+  .btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 0 0 var(--shadow-color);
+  }
+
+  .btn:active {
+    transform: translateY(5px);
+    box-shadow: 0 0 0 0 var(--shadow-color);
+  }
+
+  .btn-orange {
+    background: var(--color-orange);
+  }
+  .btn-grape {
+    background: var(--color-grape);
+    color: #fff;
+  }
+  .btn-bubble {
+    background: var(--color-bubble);
+  }
+  .btn-plain {
+    background: transparent;
+  }
+  .btn-plain:hover {
+    background: #fff;
+  }
+
+  .btn-lg {
+    padding: 1.2rem 2.5rem;
+    font-size: 1.25rem;
+  }
+
+  /* ---- Cards --------------------------------------------------------- */
+  .card {
+    position: relative;
+    border: 2.5px solid var(--color-ink);
+    border-radius: 1.75rem;
+    background: #fff;
+    box-shadow: 0 6px 0 0 var(--color-ink);
+    transition:
+      transform 0.28s var(--ease-tuft),
+      box-shadow 0.28s var(--ease-tuft);
+  }
+
+  .card-lift:hover {
+    transform: translate(-2px, -6px);
+    box-shadow: 0 12px 0 0 var(--color-ink);
+  }
+
+  /* ---- Section eyebrow ------------------------------------------------ */
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55rem;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 0.8125rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--color-ink-2);
+  }
+
+  /* ---- Yarn underline ------------------------------------------------- */
+  .yarn-underline {
+    background-image: linear-gradient(
+      to right,
+      var(--color-marigold),
+      var(--color-marigold)
+    );
+    background-repeat: no-repeat;
+    background-position: 0 88%;
+    background-size: 100% 0.32em;
+    padding-inline: 0.05em;
+  }
+
+  /* ---- Scroll reveal --------------------------------------------------- */
+  .reveal {
+    opacity: 0;
+    transform: translateY(26px);
+    transition:
+      opacity 0.7s var(--ease-tuft),
+      transform 0.7s var(--ease-tuft);
+    transition-delay: var(--reveal-delay, 0ms);
+  }
+
+  .reveal.is-in {
+    opacity: 1;
+    transform: none;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .reveal {
+      opacity: 1;
+      transform: none;
+    }
+  }
+}
+
+@layer utilities {
+  /* Fluid display type — one clamp, no breakpoint juggling. */
+  /* Sized so the wordmark always clears the hero rug that sits to its
+     right on large screens — the brand name is never overlapped. */
+  .text-mega {
+    font-size: clamp(3.5rem, 13.5vw, 12rem);
+    line-height: 0.82;
+    letter-spacing: -0.05em;
+  }
+
+  .text-huge {
+    font-size: clamp(2.5rem, 7.5vw, 5.5rem);
+  }
+
+  .text-big {
+    font-size: clamp(2rem, 5vw, 3.5rem);
+  }
+
+  .shell {
+    width: 100%;
+    max-width: 78rem;
+    margin-inline: auto;
+    padding-inline: 1.25rem;
+  }
+
+  @media (min-width: 768px) {
+    .shell {
+      padding-inline: 2.5rem;
+    }
+  }
+
+  /* Endless yarn strip */
+  .marquee-track {
+    animation: marquee 38s linear infinite;
+  }
+
+  @keyframes marquee {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-50%);
+    }
+  }
+
+  .spin-slow {
+    animation: spin 22s linear infinite;
+  }
+
+  @keyframes spin {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  /* Gentle idle breathing on the hero rug */
+  .sway {
+    animation: sway 9s ease-in-out infinite;
+  }
+
+  @keyframes sway {
+    0%,
+    100% {
+      transform: rotate(-2.2deg) translateY(0);
+    }
+    50% {
+      transform: rotate(2.2deg) translateY(-12px);
+    }
+  }
+}
