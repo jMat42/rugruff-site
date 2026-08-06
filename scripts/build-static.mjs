@@ -25,20 +25,42 @@ const result = spawnSync("npx", ["next", "build"], {
 
 if (result.status !== 0) process.exit(result.status ?? 1);
 
-// Ship the redirects alongside the export so they are not silently lost.
+const outDir = path.resolve("out");
+
+/*
+ * The legacy WordPress redirects cannot come from next.config.ts in a
+ * static export, so they ship as host config instead. Both formats are
+ * written because each host ignores the other's file, which makes the
+ * bundle portable between Apache shared hosting and Cloudflare Pages —
+ * and means moving hosts cannot silently drop the redirects.
+ */
+const REDIRECTS = [
+  ["/collaberations", "/collaborations/"],
+  ["/contact-me", "/contact/"],
+];
+
+// Apache (Hostinger and most shared hosting).
 const htaccess = `# Redirects carried over from the old WordPress URLs.
-# next.config.ts cannot apply these in a static export, so they live here.
 <IfModule mod_rewrite.c>
   RewriteEngine On
-  RewriteRule ^collaberations/?$ /collaborations/ [R=301,L]
-  RewriteRule ^contact-me/?$ /contact/ [R=301,L]
+${REDIRECTS.map(([from, to]) => `  RewriteRule ^${from.slice(1)}/?$ ${to} [R=301,L]`).join("\n")}
 </IfModule>
 
 ErrorDocument 404 /404.html
 `;
-
-const outDir = path.resolve("out");
 fs.writeFileSync(path.join(outDir, ".htaccess"), htaccess);
 
-console.log("\nWrote out/.htaccess with the two legacy redirects.");
-console.log("Upload the CONTENTS of ./out into public_html.");
+// Cloudflare Pages. Ignores .htaccess entirely, and serves 404.html itself.
+const redirects = `# Redirects carried over from the old WordPress URLs.
+${REDIRECTS.map(([from, to]) => `${from}  ${to}  301`).join("\n")}
+`;
+fs.writeFileSync(path.join(outDir, "_redirects"), redirects);
+
+// Hashed build assets never change contents, so they can be cached hard.
+const headers = `/_next/static/*
+  Cache-Control: public, max-age=31536000, immutable
+`;
+fs.writeFileSync(path.join(outDir, "_headers"), headers);
+
+console.log("\nWrote out/.htaccess, out/_redirects and out/_headers.");
+console.log("Apache reads .htaccess; Cloudflare Pages reads _redirects/_headers.");
