@@ -405,12 +405,14 @@
     animation: marquee 38s linear infinite;
   }
 
+  /* Slides by exactly one group. Must stay in sync with COPIES in
+     LoopMarquee.tsx: the value is 100% / COPIES. */
   @keyframes marquee {
     from {
       transform: translateX(0);
     }
     to {
-      transform: translateX(-50%);
+      transform: translateX(-20%);
     }
   }
 
