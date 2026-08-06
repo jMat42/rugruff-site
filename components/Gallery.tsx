@@ -17,6 +17,7 @@ const ACCENTS = [
 
 export default function Gallery({ pieces }: { pieces: Piece[] }) {
   const [open, setOpen] = useState<number | null>(null);
+  const [zoomed, setZoomed] = useState(false);
 
   const close = useCallback(() => setOpen(null), []);
   const step = useCallback(
@@ -26,6 +27,12 @@ export default function Gallery({ pieces }: { pieces: Piece[] }) {
       ),
     [pieces.length],
   );
+
+  // Always reopen fitted — carrying a zoom across to the next photo would
+  // land the viewer somewhere arbitrary in it.
+  useEffect(() => {
+    setZoomed(false);
+  }, [open]);
 
   useEffect(() => {
     if (open === null) return;
@@ -91,17 +98,29 @@ export default function Gallery({ pieces }: { pieces: Piece[] }) {
         ))}
       </div>
 
-      {/* ---- Lightbox ---- */}
+      {/* ---- Lightbox ----
+           On a phone the thumbnail is already full-bleed, and its tufted
+           ring makes it *look* wider still — so the old layout, which
+           inset the image by p-4 and stacked the controls underneath,
+           opened the photo smaller than the thumbnail it came from.
+           Now it goes edge to edge, the controls float over the image
+           instead of stealing height, and tapping zooms, because at full
+           width a portrait photo on a portrait screen has nowhere left
+           to grow. */}
       {active && (
         <div
           role="dialog"
           aria-modal="true"
           aria-label="Enlarged photo"
-          className="fixed inset-0 z-[80] flex items-center justify-center bg-ink/75 p-4 backdrop-blur-sm md:p-10"
+          className="fixed inset-0 z-[80] bg-ink/85 backdrop-blur-sm"
           onClick={close}
         >
           <div
-            className="relative max-h-full w-full max-w-3xl"
+            className={`absolute inset-0 sm:p-8 md:p-12 ${
+              zoomed
+                ? "overflow-auto"
+                : "flex items-center justify-center overflow-hidden"
+            }`}
             onClick={(e) => e.stopPropagation()}
           >
             <Image
@@ -109,33 +128,42 @@ export default function Gallery({ pieces }: { pieces: Piece[] }) {
               alt={active.alt}
               width={active.w}
               height={active.h}
-              sizes="(max-width: 768px) 92vw, 48rem"
-              className="mx-auto max-h-[76vh] w-auto rounded-3xl border-[3px] border-white object-contain shadow-2xl"
+              /* Ask for a source big enough that zooming shows real
+                 detail rather than an upscale. */
+              sizes="(max-width: 768px) 250vw, 60rem"
+              onClick={() => setZoomed((z) => !z)}
+              className={
+                zoomed
+                  ? "h-auto w-[220%] max-w-none cursor-zoom-out sm:w-[160%]"
+                  : "max-h-[100dvh] w-auto max-w-full cursor-zoom-in object-contain sm:max-h-[84dvh] sm:rounded-3xl sm:border-[3px] sm:border-white sm:shadow-2xl"
+              }
             />
+          </div>
 
-            <p className="mt-5 text-center text-sm font-medium text-white/85">
-              {open! + 1} of {pieces.length}
+          {/* Controls float above the photo so they cost it no height. */}
+          <div
+            className="pointer-events-none absolute inset-x-0 bottom-0 flex flex-col items-center gap-3 p-4 pb-5"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <p className="rounded-full bg-ink/70 px-3 py-1 text-xs font-medium text-white/90">
+              {open! + 1} of {pieces.length} &middot;{" "}
+              {zoomed ? "tap to fit" : "tap photo to zoom"}
             </p>
-
-            <div className="mt-5 flex items-center justify-center gap-3">
+            <div className="pointer-events-auto flex items-center gap-2.5">
               <button
                 type="button"
                 onClick={() => step(-1)}
-                className="btn btn-plain !bg-white !py-2.5"
+                className="btn btn-plain !bg-white !px-4 !py-2.5"
               >
                 &larr; Prev
               </button>
-              <button
-                type="button"
-                onClick={close}
-                className="btn !py-2.5"
-              >
+              <button type="button" onClick={close} className="btn !py-2.5">
                 Close
               </button>
               <button
                 type="button"
                 onClick={() => step(1)}
-                className="btn btn-plain !bg-white !py-2.5"
+                className="btn btn-plain !bg-white !px-4 !py-2.5"
               >
                 Next &rarr;
               </button>
