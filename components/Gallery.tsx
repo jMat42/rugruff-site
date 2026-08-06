@@ -115,8 +115,21 @@ export default function Gallery({ pieces }: { pieces: Piece[] }) {
           className="fixed inset-0 z-[80] bg-ink/85 backdrop-blur-sm"
           onClick={close}
         >
+          {/* Sized from this container, never from the image's own
+              intrinsic dimensions.
+
+              In the static export there is no image optimiser, so every
+              srcset candidate is the same file under a different width
+              descriptor. The browser applies density correction and
+              concludes a 1152px photo is 292px wide, which silently
+              collapsed an intrinsic-sized layout to a third of its size.
+              Aspect ratio survives that correction, so object-contain
+              still letterboxes correctly — only absolute sizing is
+              untrustworthy. The Next server build optimises properly and
+              never showed this, which is exactly why it has to be sized
+              this way. */}
           <div
-            className={`absolute inset-0 sm:p-8 md:p-12 ${
+            className={`absolute inset-0 pb-24 sm:p-8 sm:pb-28 md:p-12 md:pb-28 ${
               zoomed
                 ? "overflow-auto"
                 : "flex items-center justify-center overflow-hidden"
@@ -128,14 +141,12 @@ export default function Gallery({ pieces }: { pieces: Piece[] }) {
               alt={active.alt}
               width={active.w}
               height={active.h}
-              /* Ask for a source big enough that zooming shows real
-                 detail rather than an upscale. */
               sizes="(max-width: 768px) 250vw, 60rem"
               onClick={() => setZoomed((z) => !z)}
               className={
                 zoomed
                   ? "h-auto w-[220%] max-w-none cursor-zoom-out sm:w-[160%]"
-                  : "max-h-[100dvh] w-auto max-w-full cursor-zoom-in object-contain sm:max-h-[84dvh] sm:rounded-3xl sm:border-[3px] sm:border-white sm:shadow-2xl"
+                  : "h-full w-full cursor-zoom-in object-contain"
               }
             />
           </div>
