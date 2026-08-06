@@ -7,6 +7,9 @@
  * phrasing is otherwise the client's own.
  */
 
+/** Canonical origin. Used for metadata, robots and the sitemap. */
+export const SITE_URL = "https://rugruff.com";
+
 export const NAV = [
   { href: "/", label: "Home" },
   { href: "/my-work", label: "My Work" },
