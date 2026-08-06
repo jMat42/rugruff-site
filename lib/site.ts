@@ -218,6 +218,12 @@ export const WORK: Piece[] = [
   },
 ];
 
+/**
+ * `w`/`h` are the real pixel dimensions of each file. They were previously
+ * hardcoded to 1200x900 for every entry on the page, which was wrong for
+ * all of them — the ratios range from 0.58 to 1.31 — and reserved the
+ * wrong space before the image loaded.
+ */
 export const COLLABS = [
   {
     name: "Cdp Media",
@@ -227,6 +233,8 @@ export const COLLABS = [
     href: "https://www.instagram.com/reel/DRoI9qZDRWD",
     linkLabel: "Watch the reel",
     color: "var(--color-marigold)",
+    w: 448,
+    h: 767,
   },
   {
     name: "Phantom Kai Boots",
@@ -236,6 +244,8 @@ export const COLLABS = [
     href: null,
     linkLabel: null,
     color: "var(--color-bubble)",
+    w: 895,
+    h: 730,
   },
   {
     name: "Liam Abner Magic",
@@ -245,5 +255,20 @@ export const COLLABS = [
     href: null,
     linkLabel: null,
     color: "var(--color-grape)",
+    w: 880,
+    h: 670,
+  },
+  {
+    // Shares the gallery's copy of this photo rather than shipping a
+    // second 600KB of the same image under /collabs.
+    name: "ultimatespideyy",
+    src: "/work/ig-mask-mashup.jpg",
+    alt: "Hand-tufted mask rug, half red webbed mask and half green, photographed on grass",
+    caption: "Spider-Man: Brand New Day giveaway",
+    href: "https://www.instagram.com/ultimatespideyy/",
+    linkLabel: "See the profile",
+    color: "var(--color-orange)",
+    w: 1080,
+    h: 1235,
   },
 ] as const;

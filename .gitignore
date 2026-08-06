@@ -39,3 +39,7 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Source photo drops from the client. The individual images the site
+# actually uses are committed under public/; these bulk archives are not.
+*.zip

@@ -48,13 +48,16 @@ export default function SiteHeader() {
           className="group flex shrink-0 items-center gap-2.5"
           aria-label="RugRuff — home"
         >
+          {/* A square sitting inside a circle only stays fully inside if its
+              side is at most diameter / sqrt(2). At 44px that is ~31px, so
+              30px keeps every corner of the mark within the ring. */}
           <span className="grid size-11 place-items-center rounded-full border-[2.5px] border-ink bg-white transition-transform duration-300 group-hover:-rotate-12">
             <Image
-              src="/brand/logo.png"
+              src="/brand/logo-transparent.png"
               alt=""
-              width={44}
-              height={44}
-              className="size-8 object-contain"
+              width={429}
+              height={407}
+              className="size-[30px] object-contain"
               priority
             />
           </span>

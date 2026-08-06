@@ -75,6 +75,38 @@
     color: #fff;
   }
 
+  /* Coral scrollbar. `scrollbar-color` covers Firefox and any engine that
+     supports the standard property; the -webkit- rules cover Chrome and
+     Safari, which ignore it. */
+  html {
+    scrollbar-color: var(--color-coral) var(--color-canvas-2);
+    scrollbar-width: thin;
+  }
+
+  ::-webkit-scrollbar {
+    width: 14px;
+    height: 14px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: var(--color-canvas-2);
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: var(--color-coral);
+    border-radius: 999px;
+    /* Inset the thumb by painting the track colour into its border. */
+    border: 3px solid var(--color-canvas-2);
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--color-coral-deep);
+  }
+
+  ::-webkit-scrollbar-corner {
+    background: var(--color-canvas-2);
+  }
+
   :focus-visible {
     outline: 3px solid var(--color-grape);
     outline-offset: 3px;
@@ -305,9 +337,13 @@
       var(--color-coral)
     );
     background-repeat: no-repeat;
-    background-position: 0 88%;
-    background-size: 100% 0.32em;
+    /* Sat at 88% with a 0.32em band, which crossed the baseline and read
+       as a strikethrough. Dropped to the bottom of the line box and
+       thinned so it sits clearly under the text. */
+    background-position: 0 100%;
+    background-size: 100% 0.16em;
     padding-inline: 0.05em;
+    padding-bottom: 0.12em;
   }
 
   /* ---- Scroll reveal --------------------------------------------------- */

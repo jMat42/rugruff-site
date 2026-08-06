@@ -8,10 +8,15 @@ import Reveal from "@/components/Reveal";
 export const metadata: Metadata = {
   title: "About",
   description:
-    "A high school student who likes creating things and trying new ideas — the maker behind RugRuff.",
+    "Hey, I'm Caleb — the guy behind RugRuff. I hand-tuft every rug myself, from initial sketch to final trim.",
 };
 
-const INTERESTS = ["Music", "Skiing", "Photography", "Hands-on projects"];
+const INTERESTS = [
+  "Hand-tufting",
+  "Photography",
+  "Video production",
+  "Music production",
+];
 
 export default function AboutPage() {
   return (
@@ -21,31 +26,43 @@ export default function AboutPage() {
       <section className="shell pt-14 md:pt-20">
         <div className="grid items-start gap-14 md:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)] md:gap-20">
           <Reveal>
-            <div className="mx-auto w-[72%] max-w-xs md:mx-0 md:w-full md:max-w-none">
+            <div className="mx-auto w-[86%] max-w-md md:mx-0 md:w-full md:max-w-none">
               <Tufted
-                src="/brand/portrait.jpeg"
-                alt="Portrait of the maker behind RugRuff"
-                width={1152}
-                height={1536}
+                src="/brand/caleb.jpg"
+                alt="Caleb smiling, holding his tufting gun, with finished rugs laid out on the floor around him"
+                width={1600}
+                height={1200}
                 blob={3}
                 seed="c"
                 pile={19}
                 accent="var(--color-bubble)"
                 priority
-                sizes="(max-width: 768px) 72vw, 32vw"
-                className="aspect-[3/4]"
+                sizes="(max-width: 768px) 86vw, 36vw"
+                className="aspect-[4/3]"
               />
             </div>
           </Reveal>
 
           <Reveal delay={110}>
             <p className="font-display text-3xl leading-tight font-extrabold md:text-[2.6rem]">
-              I&rsquo;m a high school student who likes creating things and
-              trying new ideas.
+              Hey, I&rsquo;m Caleb &mdash; the guy behind RugRuff.
             </p>
             <p className="mt-7 text-xl leading-relaxed text-ink-2">
-              I&rsquo;m into music, skiing, and photography, and I enjoy working
-              on hands-on projects.
+              I hand-tuft every rug myself, from initial sketch to final trim,
+              so each piece is one-of-a-kind and made with a ton of care.
+            </p>
+            <p className="mt-6 text-xl leading-relaxed text-ink-2">
+              When I&rsquo;m not tufting, you&rsquo;ll probably find me behind a
+              camera. I&rsquo;m big into photography and video production
+              &mdash; shooting everything from car meets to night skies &mdash;
+              and I bring that same eye for color, composition, and detail into
+              my rug designs. I&rsquo;m also slowly teaching myself music
+              production, so who knows, a RugRuff soundtrack might be in the
+              future.
+            </p>
+            <p className="mt-6 text-xl leading-relaxed text-ink-2">
+              Every rug here is a mix of craft, creativity, and a little bit of
+              chaos. Thanks for checking it out.
             </p>
 
             <ul className="mt-10 flex flex-wrap gap-3">

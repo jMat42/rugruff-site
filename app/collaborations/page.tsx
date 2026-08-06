@@ -31,8 +31,8 @@ export default function CollaborationsPage() {
               <Tufted
                 src={c.src}
                 alt={c.alt}
-                width={1200}
-                height={900}
+                width={c.w}
+                height={c.h}
                 blob={((i % 4) + 1) as 1 | 2 | 3 | 4}
                 seed={(["a", "b", "c"] as const)[i % 3]}
                 pile={17}

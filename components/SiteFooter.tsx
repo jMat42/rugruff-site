@@ -11,11 +11,11 @@ export default function SiteFooter() {
             <Link href="/" className="flex items-center gap-3">
               <span className="grid size-12 place-items-center rounded-full border-[2.5px] border-ink bg-white">
                 <Image
-                  src="/brand/logo.png"
+                  src="/brand/logo-transparent.png"
                   alt=""
-                  width={48}
-                  height={48}
-                  className="size-9 object-contain"
+                  width={429}
+                  height={407}
+                  className="size-[32px] object-contain"
                 />
               </span>
               <span className="font-display text-3xl font-extrabold">
@@ -90,7 +90,56 @@ export default function SiteFooter() {
             Scroll to Top &uarr;
           </a>
         </div>
+
+        {/* Studio credit. Deliberately the quietest thing on the page. */}
+        <div className="mt-5 flex justify-start sm:justify-end">
+          <a
+            href="https://hatchbench.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-1.5 text-[11px] font-medium text-ink-3 transition-colors hover:text-ink-2"
+          >
+            <HatchMark className="size-3 shrink-0" />
+            Made by Hatchbench
+          </a>
+        </div>
       </div>
     </footer>
+  );
+}
+
+function HatchMark({ className }: { className?: string }) {
+  return (
+    <svg
+      className={className}
+      viewBox="0 0 22 20"
+      fill="none"
+      aria-hidden="true"
+    >
+      <path
+        d="M2.5 17 C2.5 7 6 2 11 2 C16 2 19.5 7 19.5 17 Z"
+        stroke="currentColor"
+        strokeWidth="1.5"
+        strokeLinejoin="round"
+      />
+      <line
+        x1="2.5"
+        y1="17"
+        x2="19.5"
+        y2="17"
+        stroke="currentColor"
+        strokeWidth="1.5"
+      />
+      <line
+        x1="11"
+        y1="2"
+        x2="11"
+        y2="17"
+        stroke="currentColor"
+        strokeWidth="1"
+        strokeDasharray="2 2"
+        opacity="0.5"
+      />
+    </svg>
   );
 }
