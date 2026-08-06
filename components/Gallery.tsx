@@ -121,21 +121,21 @@ export default function Gallery({ pieces }: { pieces: Piece[] }) {
               <button
                 type="button"
                 onClick={() => step(-1)}
-                className="btn !bg-white !py-2.5"
+                className="btn btn-plain !bg-white !py-2.5"
               >
                 &larr; Prev
               </button>
               <button
                 type="button"
                 onClick={close}
-                className="btn btn-orange !py-2.5"
+                className="btn !py-2.5"
               >
                 Close
               </button>
               <button
                 type="button"
                 onClick={() => step(1)}
-                className="btn !bg-white !py-2.5"
+                className="btn btn-plain !bg-white !py-2.5"
               >
                 Next &rarr;
               </button>

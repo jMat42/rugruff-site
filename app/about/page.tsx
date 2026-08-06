@@ -60,7 +60,7 @@ export default function AboutPage() {
             </ul>
 
             <div className="mt-12 flex flex-wrap gap-4">
-              <Link href="/my-work" className="btn btn-orange">
+              <Link href="/my-work" className="btn">
                 See My Work
               </Link>
               <Link href="/contact" className="btn btn-plain">

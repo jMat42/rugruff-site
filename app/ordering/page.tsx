@@ -88,6 +88,7 @@ export default function OrderingPage() {
                     variant="compact"
                     className="mt-auto"
                     primaryStyle={{ background: r.color }}
+                    primaryClassName="btn-yarn"
                   />
                 ) : (
                   <a
@@ -95,7 +96,7 @@ export default function OrderingPage() {
                     {...(r.external
                       ? { target: "_blank", rel: "noopener noreferrer" }
                       : {})}
-                    className="btn mt-auto w-full !justify-center"
+                    className="btn btn-yarn mt-auto w-full !justify-center"
                     style={{ background: r.color }}
                   >
                     {r.cta}
@@ -124,7 +125,7 @@ export default function OrderingPage() {
                 href={CONTACT.orderForm}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="btn btn-lg btn-orange mt-9"
+                className="btn btn-lg mt-9"
               >
                 Open the form
                 <span aria-hidden="true">&#8599;</span>

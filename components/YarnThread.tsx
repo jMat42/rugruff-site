@@ -94,7 +94,7 @@ export default function YarnThread() {
         <path
           ref={pathRef}
           d="M50 0 C 33 90, 67 150, 50 250 C 32 350, 68 400, 50 500 C 31 600, 69 650, 50 750 C 34 850, 66 910, 50 1000"
-          stroke="var(--color-marigold)"
+          stroke="var(--color-coral)"
           strokeWidth={3.5}
           opacity={0.85}
           strokeLinecap="round"
@@ -106,7 +106,7 @@ export default function YarnThread() {
 
       <div
         ref={beadRef}
-        className="absolute left-0 top-0 size-4 rounded-full border-[2.5px] border-ink bg-orange will-change-transform"
+        className="absolute left-0 top-0 size-4 rounded-full border-[2.5px] border-coral-deep bg-coral will-change-transform"
         style={{ opacity: 0, transition: "opacity .35s ease" }}
       />
     </div>

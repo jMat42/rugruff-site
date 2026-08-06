@@ -18,7 +18,15 @@
   --color-ink-2: #5c5348;
   --color-ink-3: #8b8074;
 
-  /* Yarn — sampled from the client's actual work */
+  /* Accent — the site's single signature colour, used for primary
+     buttons, the marquee, links and the yarn thread. Always paired with
+     the deeper shade as its outline. */
+  --color-coral: #d7333a;
+  --color-coral-deep: #8a0004;
+
+  /* Yarn — sampled from the client's actual work. These stay reserved for
+     the tufted rings around photos and the multi-colour badge sets, where
+     they echo the real rug colours. */
   --color-orange: #f5871f;
   --color-marigold: #ffc300;
   --color-grape: #8b63c4;
@@ -63,8 +71,8 @@
   }
 
   ::selection {
-    background: var(--color-marigold);
-    color: var(--color-ink);
+    background: var(--color-coral);
+    color: #fff;
   }
 
   :focus-visible {
@@ -188,8 +196,13 @@
   }
 
   /* ---- Chunky pile buttons ----------------------------------------- */
+  /* One button, driven by three custom properties. The accent default
+     carries the deep-coral outline; the yarn-coloured variants keep the
+     ink outline so they still read as part of the base system. */
   .btn {
-    --shadow-color: var(--color-ink);
+    --btn-bg: var(--color-coral);
+    --btn-fg: #fff;
+    --btn-line: var(--color-coral-deep);
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -201,10 +214,10 @@
     font-size: 1.0625rem;
     letter-spacing: -0.02em;
     line-height: 1;
-    border: 2.5px solid var(--color-ink);
-    background: var(--color-marigold);
-    color: var(--color-ink);
-    box-shadow: 0 5px 0 0 var(--shadow-color);
+    border: 2.5px solid var(--btn-line);
+    background: var(--btn-bg);
+    color: var(--btn-fg);
+    box-shadow: 0 5px 0 0 var(--btn-line);
     transform: translateY(0);
     transition:
       transform 0.14s var(--ease-tuft),
@@ -216,29 +229,37 @@
 
   .btn:hover {
     transform: translateY(-3px);
-    box-shadow: 0 8px 0 0 var(--shadow-color);
+    box-shadow: 0 8px 0 0 var(--btn-line);
   }
 
   .btn:active {
     transform: translateY(5px);
-    box-shadow: 0 0 0 0 var(--shadow-color);
+    box-shadow: 0 0 0 0 var(--btn-line);
   }
 
-  .btn-orange {
-    background: var(--color-orange);
-  }
   .btn-grape {
-    background: var(--color-grape);
-    color: #fff;
+    --btn-bg: var(--color-grape);
+    --btn-fg: #fff;
+    --btn-line: var(--color-ink);
   }
   .btn-bubble {
-    background: var(--color-bubble);
+    --btn-bg: var(--color-bubble);
+    --btn-fg: var(--color-ink);
+    --btn-line: var(--color-ink);
   }
   .btn-plain {
-    background: transparent;
+    --btn-bg: transparent;
+    --btn-fg: var(--color-ink);
+    --btn-line: var(--color-ink);
   }
   .btn-plain:hover {
-    background: #fff;
+    --btn-bg: #fff;
+  }
+  /* For buttons whose background is set inline from the yarn palette —
+     they need the ink outline, not the accent one. */
+  .btn-yarn {
+    --btn-fg: var(--color-ink);
+    --btn-line: var(--color-ink);
   }
 
   .btn-lg {
@@ -280,8 +301,8 @@
   .yarn-underline {
     background-image: linear-gradient(
       to right,
-      var(--color-marigold),
-      var(--color-marigold)
+      var(--color-coral),
+      var(--color-coral)
     );
     background-repeat: no-repeat;
     background-position: 0 88%;
@@ -314,10 +335,10 @@
 
 @layer utilities {
   /* Fluid display type — one clamp, no breakpoint juggling. */
-  /* Sized so the wordmark always clears the hero rug that sits to its
-     right on large screens — the brand name is never overlapped. */
+  /* The hero rug now sits in its own column below rather than floating
+     over the wordmark, so this no longer has to be held back to clear it. */
   .text-mega {
-    font-size: clamp(3.5rem, 13.5vw, 12rem);
+    font-size: clamp(3.5rem, 15vw, 14rem);
     line-height: 0.82;
     letter-spacing: -0.05em;
   }

@@ -78,7 +78,7 @@ export default function CollaborationsPage() {
               Open Minded And Easy To Work With — get in touch and let&rsquo;s
               make something.
             </p>
-            <Link href="/contact" className="btn btn-orange mt-8">
+            <Link href="/contact" className="btn mt-8">
               Contact me
             </Link>
           </div>

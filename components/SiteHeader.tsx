@@ -80,12 +80,12 @@ export default function SiteHeader() {
               {isActive(item.href) && (
                 <span
                   aria-hidden="true"
-                  className="absolute inset-x-3 bottom-1 h-[0.3em] rounded-full bg-marigold"
+                  className="absolute inset-x-3 bottom-1 h-[0.3em] rounded-full bg-coral"
                 />
               )}
             </Link>
           ))}
-          <Link href="/ordering" className="btn btn-orange ml-3 !py-2.5 !text-base">
+          <Link href="/ordering" className="btn ml-3 !py-2.5 !text-base">
             Ordering
           </Link>
         </nav>
@@ -139,7 +139,7 @@ export default function SiteHeader() {
                 open ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0"
               } ${
                 isActive(item.href)
-                  ? "bg-marigold shadow-[0_5px_0_0_var(--color-ink)]"
+                  ? "border-coral-deep bg-coral text-white shadow-[0_5px_0_0_var(--color-coral-deep)]"
                   : "bg-white shadow-[0_5px_0_0_var(--color-ink)]"
               }`}
             >

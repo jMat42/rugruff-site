@@ -25,7 +25,7 @@ export default function SiteFooter() {
             <p className="mt-5 max-w-xs text-lg leading-relaxed text-ink-2">
               Custom Rugs, Premade Rugs Or Just Look Around.
             </p>
-            <Link href="/ordering" className="btn btn-orange mt-7">
+            <Link href="/ordering" className="btn mt-7">
               View Options
             </Link>
           </div>

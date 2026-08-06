@@ -45,7 +45,7 @@ export default function LoopMarquee({
 
   return (
     <div
-      className={`overflow-hidden border-y-[2.5px] border-ink bg-marigold py-4 text-ink ${className}`}
+      className={`overflow-hidden border-y-[2.5px] border-coral-deep bg-coral py-4 text-white ${className}`}
     >
       <div className="marquee-track flex w-max">
         {half}

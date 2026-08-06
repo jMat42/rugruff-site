@@ -18,6 +18,7 @@ export default function EmailActions({
   className = "",
   variant = "full",
   primaryStyle,
+  primaryClassName = "",
 }: {
   email: string;
   subject?: string;
@@ -25,6 +26,9 @@ export default function EmailActions({
   /** "compact" keeps one primary button and demotes the rest to text links. */
   variant?: "full" | "compact";
   primaryStyle?: React.CSSProperties;
+  /** Extra classes for the primary button — e.g. `btn-yarn` when an
+   *  inline background from the yarn palette needs the ink outline. */
+  primaryClassName?: string;
 }) {
   const [copied, setCopied] = useState(false);
 
@@ -109,7 +113,7 @@ export default function EmailActions({
           href={gmail}
           target="_blank"
           rel="noopener noreferrer"
-          className="btn mt-3.5 w-full !justify-center"
+          className={`btn mt-3.5 w-full !justify-center ${primaryClassName}`}
           style={primaryStyle}
         >
           Open in Gmail

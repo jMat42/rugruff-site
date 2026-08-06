@@ -38,7 +38,7 @@ export default function MyWorkPage() {
             <p className="mx-auto mt-5 max-w-md text-lg text-ink-2">
               Send over an idea, a sketch or just a picture you like.
             </p>
-            <Link href="/ordering" className="btn btn-orange mt-8">
+            <Link href="/ordering" className="btn mt-8">
               View Options
             </Link>
           </div>

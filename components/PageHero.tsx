@@ -21,7 +21,7 @@ export default function PageHero({
         aria-hidden="true"
         className="pointer-events-none absolute inset-0 -z-20"
       >
-        <div className="absolute -left-28 -top-24 size-[24rem] rounded-full bg-marigold/25 blur-3xl" />
+        <div className="absolute -left-28 -top-24 size-[24rem] rounded-full bg-coral/25 blur-3xl" />
         <div className="absolute -right-24 -top-4 size-[20rem] rounded-full bg-grape/15 blur-3xl" />
       </div>
 
@@ -30,7 +30,7 @@ export default function PageHero({
           <p className="eyebrow">
             <span
               aria-hidden="true"
-              className="inline-block size-2.5 rounded-full bg-orange"
+              className="inline-block size-2.5 rounded-full bg-coral"
             />
             {eyebrow}
           </p>

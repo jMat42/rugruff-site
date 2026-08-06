@@ -128,7 +128,7 @@ export default function ContactPage() {
             <p className="mx-auto mt-5 max-w-md text-lg text-ink-2">
               There&rsquo;s a short form that covers everything I need to know.
             </p>
-            <Link href="/ordering" className="btn btn-orange mt-8">
+            <Link href="/ordering" className="btn mt-8">
               Go to Ordering
             </Link>
           </div>
