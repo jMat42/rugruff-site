@@ -12,8 +12,24 @@ import type { NextConfig } from "next";
  * content, just relinked and pre-rendered to flat files.
  */
 const embedBasePath = process.env.EMBED_BASE_PATH;
+const staticExport = process.env.STATIC_EXPORT === "1";
 
-const nextConfig: NextConfig = embedBasePath
+const nextConfig: NextConfig = staticExport
+  ? {
+      // Flat files for a host with no Node runtime — shared hosting,
+      // e.g. dropping the folder into Hostinger's public_html. Served at
+      // the domain root, so no basePath.
+      //
+      // Note: the redirects below cannot survive this build. On Apache or
+      // LiteSpeed they must be re-created in .htaccess.
+      output: "export",
+      trailingSlash: true,
+      images: {
+        loader: "custom",
+        loaderFile: "./lib/embed-image-loader.ts",
+      },
+    }
+  : embedBasePath
   ? {
       output: "export",
       // basePath rewrites every <Link> and every next/image src; assetPrefix
